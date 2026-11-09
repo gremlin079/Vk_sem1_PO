@@ -390,5 +390,52 @@ MLP
 }
 ```
 
+```mermaid
+flowchart TB
+    Client(["Клиент"])
+    Owner(["Владелец компании"])
+    Employee(["Администратор компании"])
+    Admin(["Администратор платформы"])
+
+    System["ПЛАТФОРМА МАРКЕТПЛЕЙСА УСЛУГ<br/>Поиск, бронирование и оплата услуг"]
+
+    SMS["SMS-сервис"]
+    Email["Почтовый сервис"]
+    Payment["Платёжная система"]
+
+    Client -->|"Регистрация и ввод личных данных"| System
+    System -->|"Запрос подтверждения телефона и почты"| Client
+    Client -->|"Ввод кода подтверждения"| System
+    Client -->|"Поиск услуг и выбор времени"| System
+    System -->|"Список компаний и свободных слотов"| Client
+    Client -->|"Создание записи и оформление оплаты"| System
+    System -->|"Статус бронирования и оплаты"| Client
+
+    Owner -->|"Регистрация компании"| System
+    Owner -->|"Добавление услуг и настройка расписания"| System
+    System -->|"Информация о записях и платежах"| Owner
+
+    Employee -->|"Управление расписанием и записями"| System
+    System -->|"Список клиентов и бронирований"| Employee
+
+    Admin -->|"Управление пользователями и компаниями"| System
+    System -->|"Данные и статусы пользователей"| Admin
+
+    System -->|"Отправка кода подтверждения"| SMS
+    SMS -->|"Доставка SMS-кода"| Client
+
+    System -->|"Отправка подтверждений и уведомлений"| Email
+    Email -->|"Доставка писем"| Client
+    Email -->|"Уведомления о новых записях"| Owner
+
+    System -->|"Создание платежа"| Payment
+    Payment -->|"Результат оплаты (Webhook)"| System
+    Client <-->|"Переход на страницу оплаты"| Payment
+
+    style System fill:#79a9f5,stroke:#3975d7,color:#111
+    style SMS fill:#d9edb0,stroke:#83a64b,color:#111
+    style Email fill:#d9edb0,stroke:#83a64b,color:#111
+    style Payment fill:#d9edb0,stroke:#83a64b,color:#111
+```
 
 
